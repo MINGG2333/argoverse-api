@@ -1,5 +1,6 @@
 # Ignoring data files #
 #######################
+hd_maps.tar.gz
 *.pkl
 *.npy
 

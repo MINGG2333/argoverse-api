@@ -318,7 +318,7 @@ def load_lane_segments_from_xml(map_fpath: _PathLike) -> Mapping[int, LaneSegmen
     for child in root:
         if child.tag == "node":
             node_obj = extract_node_from_ET_element(child)
-            all_graph_nodes[node_obj.id] = node_obj
+            all_graph_nodes[node_obj.id] = node_obj # all_graph_nodes[0] close to all_graph_nodes[1] dx dy < 1 43409
         elif child.tag == "way":
             lane_obj, lane_id = extract_lane_segment_from_ET_element(child, all_graph_nodes)
             lane_objs[lane_id] = lane_obj

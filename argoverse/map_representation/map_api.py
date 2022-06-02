@@ -55,20 +55,22 @@ class ArgoverseMap:
     are not provided, but can be hallucinated if one considers an average lane width.
     """
 
-    def __init__(self, root: _PathLike = ROOT) -> None:
+    def __init__(self, root: _PathLike = ROOT, cities = ["PIT", "MIA"]) -> None:
         """Initialize the Argoverse Map."""
         self.root = root
 
-        self.city_name_to_city_id_dict = {"PIT": PITTSBURGH_ID, "MIA": MIAMI_ID}
+        self.cities = cities
+        self.city_name_to_city_id_dict = self.get_city_name_to_city_id_dict()
         self.render_window_radius = 150
         self.im_scale_factor = 50
 
-        self.city_lane_centerlines_dict = self.build_centerline_index()
+        self.city_lane_centerlines_dict = self.build_centerline_index() # take time
+
         (
             self.city_halluc_bbox_table,
             self.city_halluc_tableidx_to_laneid_map,
         ) = self.build_hallucinated_lane_bbox_index()
-        self.city_rasterized_da_roi_dict = self.build_city_driveable_area_roi_index()
+        self.city_rasterized_da_roi_dict = self.build_city_driveable_area_roi_index() # take time
         self.city_rasterized_ground_height_dict = self.build_city_ground_height_index()
 
         # get hallucinated lane extends and driveable area from binary img
@@ -78,9 +80,9 @@ class ArgoverseMap:
         self.city_to_da_bboxes_dict: Mapping[str, np.ndarray] = {}
 
         for city_name in self.city_name_to_city_id_dict.keys():
-            lane_polygons = np.array(self.get_vector_map_lane_polygons(city_name), dtype=object)
+            lane_polygons = np.array(self.get_vector_map_lane_polygons(city_name), dtype=object) # take time
             driveable_areas = np.array(self.get_vector_map_driveable_areas(city_name), dtype=object)
-            lane_bboxes = compute_polygon_bboxes(lane_polygons)
+            lane_bboxes = compute_polygon_bboxes(lane_polygons) # take a little time
             da_bboxes = compute_polygon_bboxes(driveable_areas)
 
             self.city_to_lane_polygons_dict[city_name] = lane_polygons
@@ -93,6 +95,10 @@ class ArgoverseMap:
         if self.root is None:
             raise ValueError("Map root directory cannot be None!")
         return Path(self.root).resolve()
+
+    def get_city_name_to_city_id_dict(self, ):
+        city_name_to_city_id_dict = {"PIT": PITTSBURGH_ID, "MIA": MIAMI_ID}
+        return {ci: city_name_to_city_id_dict[ci] for ci in self.cities}
 
     def get_vector_map_lane_polygons(self, city_name: str) -> List[np.ndarray]:
         """
@@ -169,7 +175,7 @@ class ArgoverseMap:
         city_lane_centerlines_dict = {}
         for city_name, city_id in self.city_name_to_city_id_dict.items():
             xml_fpath = self.map_files_root / f"pruned_argoverse_{city_name}_{city_id}_vector_map.xml"
-            city_lane_centerlines_dict[city_name] = load_lane_segments_from_xml(xml_fpath)
+            city_lane_centerlines_dict[city_name] = load_lane_segments_from_xml(xml_fpath) # Dict(id, lane_segment: <class 'argoverse.map_representation.lane_segment.LaneSegment'>)
 
         return city_lane_centerlines_dict
 

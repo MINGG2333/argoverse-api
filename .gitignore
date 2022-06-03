@@ -3,6 +3,7 @@
 hd_maps.tar.gz
 *.pkl
 *.npy
+=*.*
 
 # We'll ignore all of the following:
 

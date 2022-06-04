@@ -106,7 +106,7 @@ def find_all_polygon_bboxes_overlapping_query_bbox(polygon_bboxes: np.ndarray, q
     y_subsumed = y_check1 & y_check2 & y_check3
     y_in_range = overlaps_below | overlaps_above | y_subsumed
 
-    overlap_indxs = np.where(x_in_range & y_in_range)[0]
+    overlap_indxs = np.where(x_in_range & y_in_range)[0] # (nums for index, )
     return overlap_indxs
 
 

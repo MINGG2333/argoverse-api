@@ -624,6 +624,7 @@ class ArgoverseMap:
         query_y: float,
         city_name: str,
         query_search_range_manhattan: float = 5.0,
+        ax: plt.Axes = None,
     ) -> List[int]:
         """
         Prune away all lane segments based on Manhattan distance. We vectorize this instead
@@ -664,6 +665,15 @@ class ArgoverseMap:
             lane_segment_id = self.city_halluc_tableidx_to_laneid_map[city_name][str(overlap_idx)]
             neighborhood_lane_ids.append(lane_segment_id)
 
+        if ax:
+            import time
+            from argoverse.utils.mpl_plotting_utils import plot_bbox_2D_xy
+            plot_bbox_2D_xy(ax, np.array([query_min_x, query_min_y, query_max_x, query_max_y]), 'r')
+            plt.show()
+            for bbox in self.city_halluc_bbox_table[city_name][overlap_indxs]:
+                plot_bbox_2D_xy(ax, bbox, 'b')
+                plt.show()
+                # time.sleep(0.5)
         return neighborhood_lane_ids
 
     def get_lane_segment_predecessor_ids(self, lane_segment_id: int, city_name: str) -> List[int]:

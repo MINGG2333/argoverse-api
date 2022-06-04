@@ -92,6 +92,33 @@ def plot_bbox_2D(
     ax.plot(pts[np.array([1, 3]), 0], pts[np.array([1, 3]), 1], c=color, linestyle=linestyle)
     ax.plot(pts[np.array([0, 2]), 0], pts[np.array([0, 2]), 1], c=color, linestyle=linestyle)
 
+def plot_bbox_2D_xy(
+    ax: plt.Axes,
+    pts: np.ndarray,
+    color: Union[Tuple[float, float, float], str],
+    linestyle: str = "-",
+) -> None:
+    """Draw a bounding box.
+
+    2D bbox vertices should be arranged as::
+      y 
+      3 ------
+        |    |
+      1 ------
+        0     2     x
+    i.e. 0,2 in x, 1,3 in y
+
+    Args:
+        ax: Matplotlib axes
+        pts: Array of shape (4,) representing the 2 diagonal points of the bounding box.
+        color: Tuple of shape (3,) representing the RGB color or a single character 3-tuple, e.g. 'b'
+        linestyle: The linestyle to use
+    """
+    ax.plot(pts[np.array([0, 2])], pts[np.array([1, 1])], c=color, linestyle=linestyle)
+    ax.plot(pts[np.array([0, 2])], pts[np.array([3, 3])], c=color, linestyle=linestyle)
+    ax.plot(pts[np.array([0, 0])], pts[np.array([1, 3])], c=color, linestyle=linestyle)
+    ax.plot(pts[np.array([2, 2])], pts[np.array([1, 3])], c=color, linestyle=linestyle)
+
 
 def animate_polyline(polyline: np.ndarray, axes_margin: int = 5, show_plot: bool = True) -> None:
     """Draw and animate a polyline on a plot.

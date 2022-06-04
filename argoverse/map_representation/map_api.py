@@ -666,14 +666,15 @@ class ArgoverseMap:
             neighborhood_lane_ids.append(lane_segment_id)
 
         if ax:
-            import time
             from argoverse.utils.mpl_plotting_utils import plot_bbox_2D_xy
+            # for bbox in self.city_halluc_bbox_table[city_name]:
+            #     plot_bbox_2D_xy(ax, bbox, 'y')
+            # plt.show()
             plot_bbox_2D_xy(ax, np.array([query_min_x, query_min_y, query_max_x, query_max_y]), 'r')
-            plt.show()
+            # plt.show()
             for bbox in self.city_halluc_bbox_table[city_name][overlap_indxs]:
-                plot_bbox_2D_xy(ax, bbox, 'b')
-                plt.show()
-                # time.sleep(0.5)
+                plot_bbox_2D_xy(ax, bbox, 'y')
+            # plt.show()
         return neighborhood_lane_ids
 
     def get_lane_segment_predecessor_ids(self, lane_segment_id: int, city_name: str) -> List[int]:

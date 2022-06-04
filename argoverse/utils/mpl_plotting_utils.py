@@ -27,9 +27,9 @@ def draw_polygon_mpl(
         color: Tuple of shape (3,) representing the RGB color or a single character 3-tuple, e.g. 'b'
     """
     if linewidth is None:
-        ax.plot(polygon[:, 0], polygon[:, 1], color=color)
+        ax.plot(polygon[:, 0], polygon[:, 1], color=color, zorder=20,)
     else:
-        ax.plot(polygon[:, 0], polygon[:, 1], color=color, linewidth=linewidth)
+        ax.plot(polygon[:, 0], polygon[:, 1], color=color, linewidth=linewidth, zorder=20,)
 
 
 def draw_polygonpatch_matplotlib(points: Any, color: Union[Tuple[float, float, float], str]) -> None:
@@ -89,8 +89,8 @@ def plot_bbox_2D(
     """
     ax.plot(pts[0:2, 0], pts[0:2, 1], c=color, linestyle=linestyle)
     ax.plot(pts[2:4, 0], pts[2:4, 1], c=color, linestyle=linestyle)
-    ax.plot(pts[np.array([1, 3]), 0], pts[np.array([1, 3]), 1], c=color, linestyle=linestyle)
-    ax.plot(pts[np.array([0, 2]), 0], pts[np.array([0, 2]), 1], c=color, linestyle=linestyle)
+    ax.plot(pts[np.array([1, 3]), 0], pts[np.array([1, 3]), 1], c=color, linestyle=linestyle, linewidth=0.1, zorder=0,)
+    ax.plot(pts[np.array([0, 2]), 0], pts[np.array([0, 2]), 1], c=color, linestyle=linestyle, linewidth=0.1, zorder=0,)
 
 def plot_bbox_2D_xy(
     ax: plt.Axes,

@@ -772,7 +772,7 @@ class ArgoverseMap:
 
     def get_lane_turn_direction(self, lane_segment_id: int, city_name: str) -> str:
         """
-        Get left/right/none direction of the specified lane_segment_id
+        Get left/right/none direction of the specified lane_segment_id, not means if can steer left/right/none
 
         Args:
             lane_segment_id: unique identifier for a lane segment within a city

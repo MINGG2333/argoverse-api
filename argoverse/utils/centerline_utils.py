@@ -40,7 +40,8 @@ def swap_left_and_right(
 
 
 def centerline_to_polygon(
-    centerline: np.ndarray, width_scaling_factor: float = 1.0, visualize: bool = False
+    centerline: np.ndarray, width_scaling_factor: float = 1.0, visualize: bool = False,
+    width: float = 3.8,
 ) -> np.ndarray:
     """
     Convert a lane centerline polyline into a rough polygon of the lane's area.
@@ -71,8 +72,8 @@ def centerline_to_polygon(
     inv_slopes = -1.0 / slopes
 
     thetas = np.arctan(inv_slopes)
-    x_disp = 3.8 * width_scaling_factor / 2.0 * np.cos(thetas)
-    y_disp = 3.8 * width_scaling_factor / 2.0 * np.sin(thetas)
+    x_disp = width * width_scaling_factor / 2.0 * np.cos(thetas)
+    y_disp = width * width_scaling_factor / 2.0 * np.sin(thetas)
 
     displacement = np.hstack([x_disp[:, np.newaxis], y_disp[:, np.newaxis]])
     right_centerline = centerline + displacement

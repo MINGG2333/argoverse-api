@@ -119,6 +119,15 @@ def plot_bbox_2D_xy(
     ax.plot(pts[np.array([0, 0])], pts[np.array([1, 3])], c=color, linestyle=linestyle)
     ax.plot(pts[np.array([2, 2])], pts[np.array([1, 3])], c=color, linestyle=linestyle)
 
+def plot_points_2D(
+    ax: plt.Axes,
+    pts: np.ndarray,
+    color: Union[Tuple[float, float, float], str],
+    sh = 1,
+    linestyle: str = "-",
+) -> None:
+    ax.scatter(pts[:, 0], pts[:, 1], s=sh, c=color)
+    
 
 def animate_polyline(polyline: np.ndarray, axes_margin: int = 5, show_plot: bool = True) -> None:
     """Draw and animate a polyline on a plot.
